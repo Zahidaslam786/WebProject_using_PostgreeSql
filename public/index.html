@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Home Service Hub | Trusted Home Services in Pakistan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav-container">
+      <div class="logo">Home Service Hub</div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="booking.html">Booking</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="worker-profile.html">Worker Profile</a>
+        <div class="auth-buttons" id="auth-container">
+          <a href="auth.html?mode=login" class="auth-btn login-btn">Login</a>
+          <a href="auth.html?mode=signup" class="auth-btn signup-btn">Sign Up</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>Trusted Home Services in Pakistan</h1>
+      <p>Book verified professionals for plumbing, electrical work, cleaning & more</p>
+      <div class="search-bar">
+        <form class="search-form">
+          <input type="text" class="search-input" placeholder="What service do you need?">
+          <select class="location-select">
+            <option>Select City</option>
+            <option>Lahore</option>
+            <option>Islamabad</option>
+            <option>Karachi</option>
+            <option>Rawalpindi</option>
+          </select>
+          <button class="search-btn" type="submit">Search Now</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services" id="services">
+    <div class="section-title">
+      <h2>Popular Services</h2>
+      <p>We offer comprehensive solutions for all your home needs</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <i class="fas fa-tools service-icon"></i>
+        <h3>Plumbing Services</h3>
+        <p>24/7 emergency plumbing solutions</p>
+      </div>
+      <div class="service-card">
+        <i class="fas fa-bolt service-icon"></i>
+        <h3>Electrical Work</h3>
+        <p>Professional wiring and installations</p>
+      </div>
+      <div class="service-card">
+        <i class="fas fa-paint-roller service-icon"></i>
+        <h3>Painting Services</h3>
+        <p>Interior & exterior painting experts</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="steps" id="how-it-works">
+    <div class="section-title">
+      <h2>How It Works</h2>
+      <p>Get your problem solved in 3 simple steps</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h3>Search & Select</h3>
+        <p>Find your required service in your city</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h3>Book & Pay</h3>
+        <p>Secure online booking & payment</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h3>Service Delivery</h3>
+        <p>Expert arrives & completes the job</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-number">5000+</div>
+        <p>Services Completed</p>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">98%</div>
+        <p>Satisfaction Rate</p>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">200+</div>
+        <p>Verified Experts</p>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">24/7</div>
+        <p>Customer Support</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- User Dashboard Preview -->
+  <section class="user-dashboard-preview" id="dashboard-preview">
+    <div class="section-title">
+      <h2>Your Dashboard</h2>
+      <p>Access your personalized services and recommendations</p>
+    </div>
+    <div class="dashboard-preview-content">
+      <div class="login-required-overlay" id="login-required">
+        <div class="login-message">
+          <i class="fas fa-lock"></i>
+          <h3>Login to Access Your Dashboard</h3>
+          <p>View your bookings, favorite services, and personalized recommendations</p>
+          <a href="auth.html?mode=login" class="cta-button">Login Now</a>
+          <a href="auth.html?mode=signup" class="cta-button outline">Create Account</a>
+        </div>
+      </div>
+      <div class="user-dashboard" id="user-data" style="display: none;">
+        <div class="dashboard-cards">
+          <div class="dashboard-card">
+            <i class="fas fa-calendar-check"></i>
+            <h3>Your Bookings</h3>
+            <p><span id="booking-count">0</span> Active Bookings</p>
+            <a href="dashboard.html#bookings">View All</a>
+          </div>
+          <div class="dashboard-card">
+            <i class="fas fa-star"></i>
+            <h3>Favorite Services</h3>
+            <p><span id="favorite-count">0</span> Saved Services</p>
+            <a href="dashboard.html#favorites">View All</a>
+          </div>
+          <div class="dashboard-card">
+            <i class="fas fa-tag"></i>
+            <h3>Special Offers</h3>
+            <p><span id="offers-count">0</span> Personalized Offers</p>
+            <a href="dashboard.html#offers">View All</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Invite Friends Section -->
+  <section class="invite-section" id="invite">
+    <div class="invite-container">
+      <div class="invite-content">
+        <h2>Invite Friends & Earn Rewards</h2>
+        <p>Get Rs. 200 credit for each friend who signs up and books a service</p>
+        <div class="invite-form" id="invite-form-container">
+          <div class="invite-form-content">
+            <input type="email" id="friend-email" placeholder="Friend's email address" required>
+            <button id="send-invite-btn" class="invite-btn">Send Invitation</button>
+          </div>
+          <div id="invite-message"></div>
+        </div>
+        <div class="invite-benefits">
+          <div class="benefit">
+            <i class="fas fa-gift"></i>
+            <p>They get Rs. 300 on first booking</p>
+          </div>
+          <div class="benefit">
+            <i class="fas fa-wallet"></i>
+            <p>You earn Rs. 200 credit</p>
+          </div>
+          <div class="benefit">
+            <i class="fas fa-infinity"></i>
+            <p>No limit on invites</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-section">
+        <h3>Home Service Hub</h3>
+        <p>Your trusted partner for home maintenance solutions across Pakistan</p>
+        <div class="app-download">
+          <p>Get our mobile app</p>
+          <div class="app-buttons">
+            <a href="#" class="app-button"><i class="fab fa-google-play"></i> Play Store</a>
+            <a href="#" class="app-button"><i class="fab fa-apple"></i> App Store</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p><i class="fas fa-phone"></i> Phone: 0315-0141643</p>
+        <p><i class="fas fa-envelope"></i> Email: zahidaslam051@gmail.com</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2023 HomeServiceHub. All rights reserved</p>
+    </div>
+  </footer>
+
+  <!-- Script for authentication without any style changes -->
+  <script>
+    // Check if user is logged in
+    fetch('/api/auth/check-auth')
+      .then(response => response.json())
+      .then(data => {
+        if (data.success && data.user) {
+          // User is logged in, update auth buttons
+          const authContainer = document.getElementById('auth-container');
+          if (authContainer) {
+            authContainer.innerHTML = `
+              <span class="welcome-text">Welcome, ${data.user.name}</span>
+              <a href="#" class="auth-btn logout-btn" id="logout-btn">Logout</a>
+            `;
+            // Add logout functionality
+            document.getElementById('logout-btn').addEventListener('click', (e) => {
+              e.preventDefault();
+              fetch('/api/auth/logout')
+                .then(res => res.json())
+                .then(data => {
+                  if (data.success) {
+                    window.location.reload();
+                  }
+                });
+            });
+          }
+        }
+      })
+      .catch(error => {
+        console.error('Error checking auth status:', error);
+      });
+  </script>
+  <script src="js/main.js"></script>
+</body>
+</html>

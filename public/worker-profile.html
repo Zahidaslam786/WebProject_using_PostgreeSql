@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Worker Profile | Home Service Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="worker-profile.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav-container">
+      <div class="logo">Home Service Hub</div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="booking.html">Booking</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="worker-profile.html" class="active">Worker Profile</a>
+        <div class="auth-buttons" id="auth-container">
+          <a href="auth.html?mode=login" class="auth-btn login-btn">Login</a>
+          <a href="auth.html?mode=signup" class="auth-btn signup-btn">Sign Up</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Worker Profile Hero -->
+  <section class="worker-hero">
+    <div class="worker-profile-header">
+      <div class="worker-cover-photo"></div>
+      <div class="worker-profile-container">
+        <div class="worker-profile-photo">
+          <img src="https://randomuser.me/api/portraits/men/42.jpg" alt="Worker Photo">
+          <div class="online-badge">Available</div>
+        </div>
+        <div class="worker-profile-info">
+          <div class="worker-name-section">
+            <h1>Ahmed Khan</h1>
+            <span class="verified-badge"><i class="fas fa-check-circle"></i> Verified</span>
+            <div class="worker-rating">
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+              <span class="rating-number">4.8</span>
+              <span class="reviews-count">(124 reviews)</span>
+            </div>
+          </div>
+          <div class="worker-tags">
+            <span class="worker-tag">Electrician</span>
+            <span class="worker-tag">HVAC Expert</span>
+            <span class="worker-tag">5+ Years</span>
+          </div>
+          <div class="worker-actions">
+            <button class="action-btn primary"><i class="fas fa-calendar-check"></i> Book Now</button>
+            <button class="action-btn secondary"><i class="fas fa-comment"></i> Contact</button>
+            <button class="action-btn outline"><i class="far fa-heart"></i> Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Worker Details Section -->
+  <section class="worker-details">
+    <div class="worker-container">
+      <div class="worker-main-content">
+        <div class="worker-about">
+          <h2>About Ahmed</h2>
+          <p>Professional electrician with 5+ years of experience specializing in residential and commercial electrical installations, maintenance, and repairs. Licensed and certified with a strong focus on safety and customer satisfaction.</p>
+          
+          <div class="worker-quick-info">
+            <div class="quick-info-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Lahore, Punjab (Service area: 20km)</span>
+            </div>
+            <div class="quick-info-item">
+              <i class="fas fa-language"></i>
+              <span>Languages: Urdu, English, Punjabi</span>
+            </div>
+            <div class="quick-info-item">
+              <i class="fas fa-clock"></i>
+              <span>Response Time: Within 30 minutes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="worker-services">
+          <h2>Services & Pricing</h2>
+          <div class="service-list">
+            <div class="service-item">
+              <div class="service-info">
+                <h3>Electrical Wiring Installation</h3>
+                <p>Complete home/office wiring with quality materials</p>
+              </div>
+              <div class="service-price">
+                <span class="price">Rs. 5,000</span>
+                <span class="unit">onwards</span>
+              </div>
+            </div>
+            <div class="service-item">
+              <div class="service-info">
+                <h3>Electrical Repair</h3>
+                <p>Fixing electrical issues, switches, outlets</p>
+              </div>
+              <div class="service-price">
+                <span class="price">Rs. 1,000</span>
+                <span class="unit">per hour</span>
+              </div>
+            </div>
+            <div class="service-item">
+              <div class="service-info">
+                <h3>HVAC Maintenance</h3>
+                <p>AC, heating system inspection and servicing</p>
+              </div>
+              <div class="service-price">
+                <span class="price">Rs. 2,500</span>
+                <span class="unit">per unit</span>
+              </div>
+            </div>
+            <div class="service-item">
+              <div class="service-info">
+                <h3>Emergency Service</h3>
+                <p>24/7 availability for urgent electrical problems</p>
+              </div>
+              <div class="service-price">
+                <span class="price">Rs. 1,500</span>
+                <span class="unit">per hour</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="worker-portfolio">
+          <h2>Portfolio & Work Photos</h2>
+          <div class="portfolio-grid">
+            <div class="portfolio-item">
+              <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Electrical work">
+              <div class="portfolio-overlay">
+                <span>Residential Wiring</span>
+              </div>
+            </div>
+            <div class="portfolio-item">
+              <img src="https://images.unsplash.com/photo-1555963966-b7ae5404b6ed?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Electrical work">
+              <div class="portfolio-overlay">
+                <span>Office Setup</span>
+              </div>
+            </div>
+            <div class="portfolio-item">
+              <img src="https://images.unsplash.com/photo-1600698279593-ec739abd1b52?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Electrical work">
+              <div class="portfolio-overlay">
+                <span>Panel Installation</span>
+              </div>
+            </div>
+            <div class="portfolio-item">
+              <img src="https://images.unsplash.com/photo-1601612649888-57101bdec4fb?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Electrical work">
+              <div class="portfolio-overlay">
+                <span>HVAC Repair</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="worker-reviews">
+          <h2>Customer Reviews</h2>
+          <div class="reviews-summary">
+            <div class="rating-summary">
+              <div class="large-rating">4.8</div>
+              <div class="rating-stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+              <div class="total-reviews">Based on 124 reviews</div>
+            </div>
+            <div class="rating-bars">
+              <div class="rating-bar-item">
+                <span>5</span>
+                <div class="progress-bar">
+                  <div class="progress" style="width: 80%"></div>
+                </div>
+                <span>80%</span>
+              </div>
+              <div class="rating-bar-item">
+                <span>4</span>
+                <div class="progress-bar">
+                  <div class="progress" style="width: 15%"></div>
+                </div>
+                <span>15%</span>
+              </div>
+              <div class="rating-bar-item">
+                <span>3</span>
+                <div class="progress-bar">
+                  <div class="progress" style="width: 5%"></div>
+                </div>
+                <span>5%</span>
+              </div>
+              <div class="rating-bar-item">
+                <span>2</span>
+                <div class="progress-bar">
+                  <div class="progress" style="width: 0%"></div>
+                </div>
+                <span>0%</span>
+              </div>
+              <div class="rating-bar-item">
+                <span>1</span>
+                <div class="progress-bar">
+                  <div class="progress" style="width: 0%"></div>
+                </div>
+                <span>0%</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="review-list">
+            <div class="review-item">
+              <div class="review-header">
+                <div class="reviewer-info">
+                  <img src="https://randomuser.me/api/portraits/women/42.jpg" alt="Reviewer" class="reviewer-photo">
+                  <div class="reviewer-details">
+                    <h4>Fatima Ahmed</h4>
+                    <div class="review-rating">
+                      <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                      </div>
+                      <span class="review-date">2 days ago</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="review-content">
+                <p>Ahmed was extremely professional and efficient. He diagnosed our electrical issue quickly and fixed it permanently. Highly recommend his services!</p>
+              </div>
+            </div>
+            
+            <div class="review-item">
+              <div class="review-header">
+                <div class="reviewer-info">
+                  <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Reviewer" class="reviewer-photo">
+                  <div class="reviewer-details">
+                    <h4>Imran Khan</h4>
+                    <div class="review-rating">
+                      <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                      </div>
+                      <span class="review-date">1 week ago</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="review-content">
+                <p>Got my AC fixed just in time for summer. Ahmed was knowledgeable and completed the work within the estimated time. Will definitely call him again for any future issues.</p>
+              </div>
+            </div>
+            
+            <div class="show-more-btn">
+              <button>Show More Reviews</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="worker-sidebar">
+        <!-- Dashboard for workers -->
+        <div class="worker-dashboard">
+          <h3>Your Dashboard</h3>
+          <p>Access your personalized services and profile settings</p>
+          
+          <div class="login-required-overlay" id="worker-login-required">
+            <div class="login-message">
+              <i class="fas fa-lock"></i>
+              <h3>Login to Access Your Dashboard</h3>
+              <p>View your bookings, manage services, and check client requests</p>
+              <a href="auth.html?mode=login" class="cta-button">Login Now</a>
+              <a href="auth.html?mode=signup&type=worker" class="cta-button outline">Register as Worker</a>
+            </div>
+          </div>
+          
+          <div id="worker-data" style="display: none;">
+            <div class="dashboard-stats">
+              <div class="stat-box">
+                <i class="fas fa-clipboard-list"></i>
+                <div class="stat-info">
+                  <span class="stat-value">12</span>
+                  <span class="stat-label">Pending Jobs</span>
+                </div>
+              </div>
+              <div class="stat-box">
+                <i class="fas fa-star"></i>
+                <div class="stat-info">
+                  <span class="stat-value">4.8</span>
+                  <span class="stat-label">Rating</span>
+                </div>
+              </div>
+              <div class="stat-box">
+                <i class="fas fa-wallet"></i>
+                <div class="stat-info">
+                  <span class="stat-value">₨15,000</span>
+                  <span class="stat-label">Earnings</span>
+                </div>
+              </div>
+            </div>
+            <a href="dashboard.html" class="dashboard-link">Go to Dashboard <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+        
+        <!-- Availability Calendar -->
+        <div class="availability-calendar">
+          <h3>Availability</h3>
+          <div class="calendar-header">
+            <span>November 2023</span>
+            <div class="calendar-nav">
+              <button><i class="fas fa-chevron-left"></i></button>
+              <button><i class="fas fa-chevron-right"></i></button>
+            </div>
+          </div>
+          <div class="calendar-grid">
+            <div class="calendar-day day-name">Sun</div>
+            <div class="calendar-day day-name">Mon</div>
+            <div class="calendar-day day-name">Tue</div>
+            <div class="calendar-day day-name">Wed</div>
+            <div class="calendar-day day-name">Thu</div>
+            <div class="calendar-day day-name">Fri</div>
+            <div class="calendar-day day-name">Sat</div>
+            
+            <div class="calendar-day disabled">29</div>
+            <div class="calendar-day disabled">30</div>
+            <div class="calendar-day disabled">31</div>
+            <div class="calendar-day">1</div>
+            <div class="calendar-day">2</div>
+            <div class="calendar-day">3</div>
+            <div class="calendar-day">4</div>
+            <div class="calendar-day">5</div>
+            <div class="calendar-day">6</div>
+            <div class="calendar-day">7</div>
+            <div class="calendar-day">8</div>
+            <div class="calendar-day booked">9</div>
+            <div class="calendar-day booked">10</div>
+            <div class="calendar-day">11</div>
+            <div class="calendar-day">12</div>
+            <div class="calendar-day">13</div>
+            <div class="calendar-day today">14</div>
+            <div class="calendar-day">15</div>
+            <div class="calendar-day booked">16</div>
+            <div class="calendar-day booked">17</div>
+            <div class="calendar-day booked">18</div>
+            <div class="calendar-day">19</div>
+            <div class="calendar-day">20</div>
+            <div class="calendar-day">21</div>
+            <div class="calendar-day">22</div>
+            <div class="calendar-day">23</div>
+            <div class="calendar-day">24</div>
+            <div class="calendar-day">25</div>
+            <div class="calendar-day">26</div>
+            <div class="calendar-day">27</div>
+            <div class="calendar-day">28</div>
+            <div class="calendar-day">29</div>
+            <div class="calendar-day">30</div>
+            <div class="calendar-day disabled">1</div>
+            <div class="calendar-day disabled">2</div>
+          </div>
+          <div class="calendar-legend">
+            <div class="legend-item">
+              <span class="legend-color available"></span>
+              <span>Available</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color booked"></span>
+              <span>Booked</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Invite Friends Section -->
+        <div class="invite-friends-card">
+          <h3>Invite Friends & Earn Rewards</h3>
+          <p>Get Rs. 200 credit for each friend who signs up and books a service</p>
+          <div class="invite-form" id="invite-form-container">
+            <div class="invite-form-content">
+              <input type="email" id="friend-email" placeholder="Friend's email address" required>
+              <button id="send-invite-btn" class="invite-btn">Send</button>
+            </div>
+            <div id="invite-message"></div>
+          </div>
+          <div class="invite-benefits">
+            <div class="benefit-item">
+              <i class="fas fa-gift"></i>
+              <p>They get Rs. 300 on first booking</p>
+            </div>
+            <div class="benefit-item">
+              <i class="fas fa-wallet"></i>
+              <p>You earn Rs. 200 credit</p>
+            </div>
+            <div class="benefit-item">
+              <i class="fas fa-infinity"></i>
+              <p>No limit on invites</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <!-- Footer content would go here - keeping the same as the main site -->
+  </footer>
+
+  <!-- Add basic auth check script -->
+  <script>
+    // Check if user is logged in
+    fetch('/api/auth/check-auth')
+      .then(response => response.json())
+      .then(data => {
+        if (data.success && data.user) {
+          // User is logged in, update auth buttons
+          const authContainer = document.getElementById('auth-container');
+          if (authContainer) {
+            authContainer.innerHTML = `
+              <span class="welcome-text">Welcome, ${data.user.name}</span>
+              <a href="#" class="auth-btn logout-btn" id="logout-btn">Logout</a>
+            `;
+            // Add logout functionality
+            document.getElementById('logout-btn').addEventListener('click', (e) => {
+              e.preventDefault();
+              fetch('/api/auth/logout')
+                .then(res => res.json())
+                .then(data => {
+                  if (data.success) {
+                    window.location.reload();
+                  }
+                });
+            });
+          }
+
+          // Update worker dashboard if logged in
+          const workerLoginRequired = document.getElementById('worker-login-required');
+          const workerData = document.getElementById('worker-data');
+          
+          if (workerLoginRequired && workerData) {
+            workerLoginRequired.style.display = 'none';
+            workerData.style.display = 'block';
+          }
+        }
+      })
+      .catch(error => {
+        console.error('Error checking auth status:', error);
+      });
+  </script>
+</body>
+</html>

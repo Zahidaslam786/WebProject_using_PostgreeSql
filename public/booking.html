@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Booking - Home Service Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav-container">
+      <div class="logo">Home Service Hub</div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="booking.html" class="active">Booking</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="auth.html?mode=login" class="auth-btn login-btn" onclick="window.location.href=this.href; return false;">Login</a>
+        <a href="auth.html?mode=signup" class="auth-btn signup-btn" onclick="window.location.href=this.href; return false;">Sign Up</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Booking Section -->
+  <section class="booking-section" id="booking">
+    <div class="section-title">
+      <h2>Book Your Service</h2>
+      <p>Schedule your home service with ease</p>
+    </div>
+
+    <!-- Slider -->
+    <div class="swiper-container booking-slider">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f" alt="Booking Calendar" />
+        </div>
+        <div class="swiper-slide">
+          <img src="professional.jpg" alt="Professional at Work" />
+        </div>
+        <div class="swiper-slide">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" alt="Confirmation" />
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+
+    <!-- Booking Form and Service Details -->
+    <div class="booking-container">
+      <div class="service-details-card" id="service-details">
+        <!-- Service details will be loaded dynamically -->
+      </div>
+
+      <div class="booking-form-container">
+        <h3>Booking Details</h3>
+        <form id="booking-form" class="booking-form">
+          <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input type="text" id="name" name="name" required />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{10,15}" required />
+            <small>Enter a valid phone number (10-15 digits)</small>
+          </div>
+          <div class="form-group">
+            <label for="address">Address *</label>
+            <textarea id="address" name="address" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="date">Preferred Date *</label>
+            <input type="date" id="date" name="date" required />
+          </div>
+          <div class="form-group">
+            <label for="time">Preferred Time *</label>
+            <input type="time" id="time" name="time" required />
+          </div>
+          <div class="form-group">
+            <label for="notes">Additional Notes</label>
+            <textarea id="notes" name="notes"></textarea>
+          </div>
+          <button type="submit" class="confirm-btn">Confirm Booking</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Booking Summary (Hidden Initially) -->
+    <div class="booking-summary" id="booking-summary" style="display: none;">
+      <h3>Booking Confirmation</h3>
+      <div class="summary-details" id="summary-details">
+        <!-- Summary will be populated dynamically -->
+      </div>
+      <p class="confirmation-message">Booking Confirmed! We’ll contact you soon.</p>
+      <a href="dashboard.html" class="view-dashboard-btn">View in Dashboard</a>
+    </div>
+
+    <!-- Related Services -->
+    <div class="related-services">
+      <h3>Explore More Services</h3>
+      <div class="services-grid" id="related-services">
+        <!-- Related services will be loaded dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-section">
+        <h3>Home Service Hub</h3>
+        <p>Your trusted partner for home maintenance solutions across Pakistan</p>
+      </div>
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p>Phone: 0315-0141643</p>
+        <p>Email: zahidaslam051@gmail.com</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2023 HomeServiceHub. All rights reserved</p>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize Swiper Slider
+    const swiper = new Swiper('.booking-slider', {
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      autoplay: {
+        delay: 3000,
+      },
+    });
+
+    $(document).ready(function() {
+      // Highlight active navigation link
+      $('.nav-links a').each(function() {
+        if (this.href === window.location.href.split('?')[0]) {
+          $(this).addClass('active');
+        }
+      });
+
+      // Get the service ID from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const serviceId = parseInt(urlParams.get('service'));
+
+      // Load services from JSON
+      $.ajax({
+        url: 'data/services.json',
+        method: 'GET',
+        success: function(services) {
+          // Display selected service details
+          const selectedService = services.find(s => s.id === serviceId);
+          if (selectedService) {
+            $('#service-details').html(`
+              <img src="${selectedService.image}" alt="${selectedService.name}" class="service-image" />
+              <h3>${selectedService.name}</h3>
+              <p>Category: ${selectedService.category}</p>
+              <p>Price: PKR ${selectedService.price}</p>
+              <p>Rating: ${selectedService.rating} <i class="fas fa-star"></i></p>
+              <p>Availability: ${selectedService.availability}</p>
+              <p>City: ${selectedService.city}</p>
+            `);
+          } else {
+            $('#service-details').html('<p>Service not found. Please select a service from the Services page.</p>');
+          }
+
+          // Display related services (exclude the selected service)
+          const relatedServices = services.filter(s => s.id !== serviceId);
+          displayRelatedServices(relatedServices);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.error('Error loading services:', textStatus, errorThrown);
+          // Fallback data
+          const fallbackServices = [
+            {
+              id: 1,
+              name: "Leak Repair",
+              category: "Plumbing",
+              price: 5000,
+              rating: 4.5,
+              availability: "24/7",
+              city: "Lahore",
+              image: "repair.jpg"
+            },
+            {
+              id: 2,
+              name: "Wiring Installation",
+              category: "Electrical",
+              price: 7000,
+              rating: 4.8,
+              availability: "9 AM - 5 PM",
+              city: "Karachi",
+              image: "wiring.jpg"
+            },
+            {
+              id: 3,
+              name: "Interior Painting",
+              category: "Painting",
+              price: 10000,
+              rating: 4.2,
+              availability: "Weekends",
+              city: "Islamabad",
+              image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
+            },
+            {
+              id: 4,
+              name: "Carpenter",
+              category: "Carpentry",
+              price: 6000,
+              rating: 4.7,
+              availability: "10 AM - 6 PM",
+              city: "Lahore",
+              image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688"
+            },
+            {
+              id: 5,
+              name: "Engineer",
+              category: "Engineering",
+              price: 8000,
+              rating: 4.9,
+              availability: "By Appointment",
+              city: "Karachi",
+              image: "engineer1.jpg"
+            },
+            {
+              id: 6,
+              name: "Huvor",
+              category: "Special Services",
+              price: 9000,
+              rating: 4.6,
+              availability: "24/7",
+              city: "Islamabad",
+              image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d"
+            },
+            {
+              id: 7,
+              name: "Plasterer",
+              category: "Masonry",
+              price: 5500,
+              rating: 4.4,
+              availability: "9 AM - 5 PM",
+              city: "Rawalpindi",
+              image: "pluster.jpg"
+            },
+            {
+              id: 8,
+              name: "Cleaner",
+              category: "Cleaning Services",
+              price: 4000,
+              rating: 4.3,
+              availability: "Weekends",
+              city: "Lahore",
+              image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
+            }
+          ];
+
+          const selectedService = fallbackServices.find(s => s.id === serviceId);
+          if (selectedService) {
+            $('#service-details').html(`
+              <img src="${selectedService.image}" alt="${selectedService.name}" class="service-image" />
+              <h3>${selectedService.name}</h3>
+              <p>Category: ${selectedService.category}</p>
+              <p>Price: PKR ${selectedService.price}</p>
+              <p>Rating: ${selectedService.rating} <i class="fas fa-star"></i></p>
+              <p>Availability: ${selectedService.availability}</p>
+              <p>City: ${selectedService.city}</p>
+            `);
+          } else {
+            $('#service-details').html('<p>Service not found. Please select a service from the Services page.</p>');
+          }
+
+          const relatedServices = fallbackServices.filter(s => s.id !== serviceId);
+          displayRelatedServices(relatedServices);
+        }
+      });
+
+      // Display related services
+      function displayRelatedServices(services) {
+        $('#related-services').html(
+          services.map(service => `
+            <div class="service-card">
+              <img src="${service.image}" alt="${service.name}" class="service-image" />
+              <h3>${service.name}</h3>
+              <p>Category: ${service.category}</p>
+              <p>Price: PKR ${service.price}</p>
+              <p>Rating: ${service.rating} <i class="fas fa-star"></i></p>
+              <p>Availability: ${service.availability}</p>
+              <p>City: ${service.city}</p>
+              <a href="booking.html?service=${service.id}" class="search-btn">Book Now</a>
+            </div>
+          `).join('')
+        );
+      }
+
+      // Form validation and submission
+      $('#booking-form').on('submit', function(e) {
+        e.preventDefault();
+
+        // Get form values
+        const name = $('#name').val().trim();
+        const phone = $('#phone').val().trim();
+        const address = $('#address').val().trim();
+        const date = $('#date').val();
+        const time = $('#time').val();
+        const notes = $('#notes').val().trim();
+
+        // Validation
+        let isValid = true;
+        let errorMessage = '';
+
+        if (!name) {
+          isValid = false;
+          errorMessage += 'Full Name is required.\n';
+        }
+
+        const phoneRegex = /^[0-9]{10,15}$/;
+        if (!phone || !phoneRegex.test(phone)) {
+          isValid = false;
+          errorMessage += 'Please enter a valid phone number (10-15 digits).\n';
+        }
+
+        if (!address) {
+          isValid = false;
+          errorMessage += 'Address is required.\n';
+        }
+
+        if (!date) {
+          isValid = false;
+          errorMessage += 'Preferred Date is required.\n';
+        } else {
+          const selectedDate = new Date(date);
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          if (selectedDate < today) {
+            isValid = false;
+            errorMessage += 'Preferred Date cannot be in the past.\n';
+          }
+        }
+
+        if (!time) {
+          isValid = false;
+          errorMessage += 'Preferred Time is required.\n';
+        }
+
+        if (!isValid) {
+          alert(errorMessage);
+          return;
+        }
+
+        // Fetch selected service for summary
+        $.ajax({
+          url: 'data/services.json',
+          method: 'GET',
+          success: function(services) {
+            const selectedService = services.find(s => s.id === serviceId);
+            displayBookingSummary(selectedService, { name, phone, address, date, time, notes });
+          },
+          error: function() {
+            const fallbackService = fallbackServices.find(s => s.id === serviceId);
+            displayBookingSummary(fallbackService, { name, phone, address, date, time, notes });
+          }
+        });
+      });
+
+      // Display booking summary
+      function displayBookingSummary(service, bookingDetails) {
+        $('#summary-details').html(`
+          <h4>Service Details</h4>
+          <p><strong>Name:</strong> ${service.name}</p>
+          <p><strong>Category:</strong> ${service.category}</p>
+          <p><strong>Price:</strong> PKR ${service.price}</p>
+          <p><strong>Availability:</strong> ${service.availability}</p>
+          <p><strong>City:</strong> ${service.city}</p>
+          <h4>Your Details</h4>
+          <p><strong>Full Name:</strong> ${bookingDetails.name}</p>
+          <p><strong>Phone:</strong> ${bookingDetails.phone}</p>
+          <p><strong>Address:</strong> ${bookingDetails.address}</p>
+          <p><strong>Date:</strong> ${bookingDetails.date}</p>
+          <p><strong>Time:</strong> ${bookingDetails.time}</p>
+          ${bookingDetails.notes ? `<p><strong>Notes:</strong> ${bookingDetails.notes}</p>` : ''}
+        `);
+
+        // Show summary and hide form
+        $('#booking-summary').show();
+        $('.booking-container').hide();
+
+        // Store booking in localStorage
+        const booking = {
+          serviceId: service.id,
+          serviceName: service.name,
+          price: service.price,
+          bookingDetails: bookingDetails,
+          timestamp: new Date().toISOString()
+        };
+        let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+        bookings.push(booking);
+        localStorage.setItem('bookings', JSON.stringify(bookings));
+      }
+    });
+  </script>
+</body>
+</html>

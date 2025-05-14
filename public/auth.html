@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Authentication - Login, Signup & Reset Password</title>
+  <!-- Unicons for icons -->
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+  <!-- link to the external CSS file -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="auth-container">
+    <!-- LEFT COLUMN: FORM -->
+    <div class="auth-left">
+      <div class="form_container">
+        <i class="uil uil-times form_close" onclick="closeWindow()"></i>
+        
+        <!-- Login Form -->
+        <div class="form" id="login_form">
+          <form action="#" onsubmit="return false;">
+            <h2>Login</h2>
+            <div class="input_box">
+              <input type="email" placeholder="Enter your email" required />
+              <i class="uil uil-envelope-alt email"></i>
+            </div>
+            <div class="input_box">
+              <input type="password" placeholder="Enter your password" required />
+              <i class="uil uil-lock password"></i>
+              <i class="uil uil-eye-slash pw_hide"></i>
+            </div>
+            <div class="option_field">
+              <span class="checkbox">
+                <input type="checkbox" id="check" />
+                <label for="check">Remember me</label>
+              </span>
+              <a href="#" id="show_forget">Forgot password?</a>
+            </div>
+            <button class="button">Login Now</button>
+            <div class="login_signup">Don't have an account? <a href="#" id="show_signup">Signup</a></div>
+          </form>
+        </div>
+        
+        <!-- Signup Form -->
+        <div class="form" id="signup_form">
+          <form action="#" onsubmit="return false;">
+            <h2>Signup</h2>
+            <div class="input_box">
+              <input type="email" placeholder="Enter your email" required />
+              <i class="uil uil-envelope-alt email"></i>
+            </div>
+            <div class="input_box">
+              <input type="password" placeholder="Create password" required />
+              <i class="uil uil-lock password"></i>
+              <i class="uil uil-eye-slash pw_hide"></i>
+            </div>
+            <div class="input_box">
+              <input type="password" placeholder="Confirm password" required />
+              <i class="uil uil-lock password"></i>
+              <i class="uil uil-eye-slash pw_hide"></i>
+            </div>
+            <button class="button">Signup Now</button>
+            <div class="login_signup">Already have an account? <a href="#" id="show_login">Login</a></div>
+          </form>
+        </div>
+        
+        <!-- Reset Password Form -->
+        <div class="form" id="forget_form">
+          <form action="#" onsubmit="return false;">
+            <h2>Reset Password</h2>
+            <div class="input_box">
+              <input type="email" placeholder="Enter your registered email" required />
+              <i class="uil uil-envelope-alt email"></i>
+            </div>
+            <!-- OTP box initially hidden -->
+            <div class="input_box otp_box" style="display:none;">
+              <input type="text" placeholder="Enter OTP" required />
+              <i class="uil uil-key"></i>
+            </div>
+            <button class="button" id="otp_button">Send OTP</button>
+            <div class="login_forget">Remembered? <a href="#" id="back_to_login">Back to Login</a></div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: IMAGE -->
+    <div class="auth-right">
+      <!-- The background image is set in CSS above -->
+    </div>
+  </div>
+
+  <script>
+    // Close button: redirect to main site
+    function closeWindow() {
+      window.location.href = "index.html";
+    }
+    
+    // Elements for the forms
+    const loginForm = document.getElementById("login_form");
+    const signupForm = document.getElementById("signup_form");
+    const forgetForm = document.getElementById("forget_form");
+    
+    // Show the selected form, hide the others
+    function showForm(form) {
+      loginForm.classList.remove("active");
+      signupForm.classList.remove("active");
+      forgetForm.classList.remove("active");
+      form.classList.add("active");
+    }
+    
+    // Check URL query parameter to determine initial mode
+    const params = new URLSearchParams(window.location.search);
+    const mode = params.get("mode");
+    if (mode === "signup") {
+      showForm(signupForm);
+    } else {
+      showForm(loginForm);
+    }
+    
+    // Toggle between forms
+    document.getElementById("show_signup").addEventListener("click", function(e) {
+      e.preventDefault();
+      showForm(signupForm);
+    });
+    
+    document.getElementById("show_login").addEventListener("click", function(e) {
+      e.preventDefault();
+      showForm(loginForm);
+    });
+    
+    document.getElementById("show_forget").addEventListener("click", function(e) {
+      e.preventDefault();
+      showForm(forgetForm);
+    });
+    
+    document.getElementById("back_to_login").addEventListener("click", function(e) {
+      e.preventDefault();
+      showForm(loginForm);
+    });
+    
+    // Password show/hide functionality
+    const pwHideIcons = document.querySelectorAll(".pw_hide");
+    pwHideIcons.forEach((icon) => {
+      icon.addEventListener("click", () => {
+        const inputField = icon.parentElement.querySelector("input");
+        if (inputField.type === "password") {
+          inputField.type = "text";
+          icon.classList.replace("uil-eye-slash", "uil-eye");
+        } else {
+          inputField.type = "password";
+          icon.classList.replace("uil-eye", "uil-eye-slash");
+        }
+      });
+    });
+    
+    /* -----------------------------------------------------------
+       VALIDATION LOGIC FOR THE FORMS
+       ----------------------------------------------------------- */
+    
+    // Helper function: Validate email format and constraints
+    function isValidEmail(email) {
+      // Basic email format check
+      const basicEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!basicEmailRegex.test(email)) {
+        return { valid: false, message: "Please enter a valid email address." };
+      }
+
+      // Split email into local part (before @) and domain
+      const [localPart, domain] = email.split('@');
+
+      // Check local part (email name) constraints
+      // - At least 3 characters long
+      // - Should not be too short or meaningless (e.g., "za")
+      if (localPart.length < 3 || localPart === "za") {
+        return { valid: false, message: "Email name must be at least 3 characters long and meaningful (e.g., not 'za')." };
+      }
+
+      // Check domain constraints
+      const allowedDomains = ["gmail.com", "outlook.com", "yahoo.com", "cfd.nu.edu.pk"];
+      if (!allowedDomains.includes(domain.toLowerCase())) {
+        return { valid: false, message: "Email domain must be one of: gmail.com, outlook.com, yahoo.com, or cfd.nu.edu.pk." };
+      }
+
+      return { valid: true };
+    }
+    
+    // Helper function: Validate password complexity
+    function isValidPassword(password) {
+      // At least 8 characters, one uppercase, one lowercase, one digit, one special character
+      const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+      if (!re.test(password)) {
+        return { valid: false, message: "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a digit, and a special character." };
+      }
+
+      // Additional check: No spaces in password
+      if (/\s/.test(password)) {
+        return { valid: false, message: "Password cannot contain spaces." };
+      }
+
+      return { valid: true };
+    }
+    
+    // Login Form Validation
+    const loginFormElement = loginForm.querySelector("form");
+    loginFormElement.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const inputs = this.querySelectorAll("input");
+      const email = inputs[0].value.trim();
+      const password = inputs[1].value.trim();
+      
+      // Validate email
+      const emailValidation = isValidEmail(email);
+      if (!emailValidation.valid) {
+        alert(emailValidation.message);
+        return;
+      }
+      
+      // Validate password
+      const passwordValidation = isValidPassword(password);
+      if (!passwordValidation.valid) {
+        alert(passwordValidation.message);
+        return;
+      }
+
+      // Simulate checking credentials (in a real app, this would be an API call)
+      const storedUser = JSON.parse(localStorage.getItem('user')) || {};
+      if (storedUser.email !== email || storedUser.password !== password) {
+        alert("Invalid email or password.");
+        return;
+      }
+      
+      // All validations passed, redirect to services page
+      localStorage.setItem('userName', email.split('@')[0]); // Store username for dashboard
+      alert("Login successful! Redirecting to Services page.");
+      window.location.href = "services.html";
+    });
+    
+    // Signup Form Validation
+    const signupFormElement = signupForm.querySelector("form");
+    signupFormElement.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const inputs = this.querySelectorAll("input");
+      const email = inputs[0].value.trim();
+      const password = inputs[1].value.trim();
+      const confirmPassword = inputs[2].value.trim();
+      
+      // Validate email
+      const emailValidation = isValidEmail(email);
+      if (!emailValidation.valid) {
+        alert(emailValidation.message);
+        return;
+      }
+      
+      // Validate password
+      const passwordValidation = isValidPassword(password);
+      if (!passwordValidation.valid) {
+        alert(passwordValidation.message);
+        return;
+      }
+      
+      if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+      
+      // All validations passed, store user in localStorage (simulating signup)
+      const user = { email, password };
+      localStorage.setItem('user', JSON.stringify(user));
+      alert("Signup successful! Please login.");
+      showForm(loginForm);
+    });
+    
+    // Reset Password Form (Forget) Validation with OTP flow
+    const forgetFormElement = forgetForm.querySelector("form");
+    const otpButton = document.getElementById("otp_button");
+    otpButton.addEventListener("click", function(e) {
+      e.preventDefault();
+      const emailInput = forgetFormElement.querySelector("input[type='email']");
+      const email = emailInput.value.trim();
+      
+      // Validate email
+      const emailValidation = isValidEmail(email);
+      if (!emailValidation.valid) {
+        alert(emailValidation.message);
+        return;
+      }
+      
+      // OTP box element
+      const otpBox = forgetFormElement.querySelector(".otp_box");
+      
+      // If OTP box is hidden, simulate sending OTP and show the OTP field
+      if (otpBox.style.display === "none") {
+        alert("OTP has been sent to your email.");
+        otpBox.style.display = "block";
+        otpButton.textContent = "Reset Password";
+        return;
+      } else {
+        // OTP box is visible; validate OTP
+        const otpInput = otpBox.querySelector("input");
+        const otp = otpInput.value.trim();
+        if (!/^\d{6}$/.test(otp)) {
+          alert("Please enter a valid 6-digit OTP.");
+          return;
+        }
+        // All validations passed
+        alert("Reset Password successful! Please login with your new password.");
+        showForm(loginForm);
+      }
+    });
+  </script>
+</body>
+</html>

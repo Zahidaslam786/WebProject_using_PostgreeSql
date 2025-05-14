@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - Home Service Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav-container">
+      <div class="logo">Home Service Hub</div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="booking.html">Booking</a>
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="auth.html?mode=login" class="auth-btn login-btn" onclick="window.location.href=this.href; return false;">Login</a>
+        <a href="auth.html?mode=signup" class="auth-btn signup-btn" onclick="window.location.href=this.href; return false;">Sign Up</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Dashboard Section -->
+  <section class="dashboard-section" id="dashboard">
+    <div class="section-title">
+      <h2>Your Dashboard</h2>
+      <p>Manage your bookings and explore more services</p>
+    </div>
+
+    <!-- Slider -->
+    <div class="swiper-container dashboard-slider">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f" alt="Dashboard Overview" />
+        </div>
+        <div class="swiper-slide">
+          <img src="https://images.unsplash.com/photo-1581578735769-4c7439142495" alt="Professional at Work" />
+        </div>
+        <div class="swiper-slide">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" alt="Service Confirmation" />
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+
+    <!-- Welcome and Booking History -->
+    <div class="dashboard-content">
+      <div class="welcome-message">
+        <h3>Welcome, John Doe!</h3>
+        <p>Here’s an overview of your bookings.</p>
+      </div>
+
+      <div class="quick-actions">
+        <a href="services.html" class="action-btn">Book Another Service</a>
+      </div>
+
+      <div class="booking-history">
+        <h3>Your Bookings</h3>
+        <div class="booking-list" id="booking-list">
+          <!-- Bookings will be loaded dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Services -->
+    <div class="recent-services">
+      <h3>Recent Services</h3>
+      <div class="services-grid" id="recent-services">
+        <!-- Recent services will be loaded dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-section">
+        <h3>Home Service Hub</h3>
+        <p>Your trusted partner for home maintenance solutions across Pakistan</p>
+      </div>
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p>Phone: 0315-0141643</p>
+        <p>Email: zahidaslam051@gmail.com</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2023 HomeServiceHub. All rights reserved</p>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize Swiper Slider
+    const swiper = new Swiper('.dashboard-slider', {
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      autoplay: {
+        delay: 3000,
+      },
+    });
+
+    $(document).ready(function() {
+      // Highlight active navigation link
+      $('.nav-links a').each(function() {
+        if (this.href === window.location.href) {
+          $(this).addClass('active');
+        }
+      });
+
+      // Load booking history from localStorage
+      const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+      displayBookings(bookings);
+
+      // Load recent services
+      $.ajax({
+        url: 'data/services.json',
+        method: 'GET',
+        success: function(services) {
+          displayRecentServices(services);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.error('Error loading services:', textStatus, errorThrown);
+          // Fallback data
+          const fallbackServices = [
+            {
+              id: 1,
+              name: "Leak Repair",
+              category: "Plumbing",
+              price: 5000,
+              rating: 4.5,
+              availability: "24/7",
+              city: "Lahore",
+              image: "https://images.unsplash.com/photo-1581578735769-4c7439142495"
+            },
+            {
+              id: 2,
+              name: "Wiring Installation",
+              category: "Electrical",
+              price: 7000,
+              rating: 4.8,
+              availability: "9 AM - 5 PM",
+              city: "Karachi",
+              image: "https://images.unsplash.com/photo-1578574579388-47d803e3b343"
+            },
+            {
+              id: 3,
+              name: "Interior Painting",
+              category: "Painting",
+              price: 10000,
+              rating: 4.2,
+              availability: "Weekends",
+              city: "Islamabad",
+              image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
+            },
+            {
+              id: 4,
+              name: "Carpenter",
+              category: "Carpentry",
+              price: 6000,
+              rating: 4.7,
+              availability: "10 AM - 6 PM",
+              city: "Lahore",
+              image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688"
+            },
+            {
+              id: 5,
+              name: "Engineer",
+              category: "Engineering",
+              price: 8000,
+              rating: 4.9,
+              availability: "By Appointment",
+              city: "Karachi",
+              image: "https://images.unsplash.com/photo-1503387762-5927c2ebaeea"
+            },
+            {
+              id: 6,
+              name: "Huvor",
+              category: "Special Services",
+              price: 9000,
+              rating: 4.6,
+              availability: "24/7",
+              city: "Islamabad",
+              image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d"
+            },
+            {
+              id: 7,
+              name: "Plasterer",
+              category: "Masonry",
+              price: 5500,
+              rating: 4.4,
+              availability: "9 AM - 5 PM",
+              city: "Rawalpindi",
+              image: "https://images.unsplash.com/photo-1581093450021-1a663a8a6d7b"
+            },
+            {
+              id: 8,
+              name: "Cleaner",
+              category: "Cleaning Services",
+              price: 4000,
+              rating: 4.3,
+              availability: "Weekends",
+              city: "Lahore",
+              image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
+            }
+          ];
+          displayRecentServices(fallbackServices);
+        }
+      });
+
+      // Display bookings
+      function displayBookings(bookings) {
+        if (bookings.length === 0) {
+          $('#booking-list').html('<p>No bookings found. Book a service now!</p>');
+          return;
+        }
+
+        $('#booking-list').html(
+          bookings.map((booking, index) => `
+            <div class="booking-card" data-index="${index}">
+              <h4>${booking.serviceName}</h4>
+              <p><strong>Price:</strong> PKR ${booking.price}</p>
+              <p><strong>Date:</strong> ${booking.bookingDetails.date}</p>
+              <p><strong>Time:</strong> ${booking.bookingDetails.time}</p>
+              <p><strong>Address:</strong> ${booking.bookingDetails.address}</p>
+              <p><strong>Status:</strong> Confirmed</p>
+              <button class="cancel-btn" data-index="${index}">Cancel Booking</button>
+            </div>
+          `).join('')
+        );
+
+        // Add event listener for cancel buttons
+        $('.cancel-btn').on('click', function() {
+          const index = $(this).data('index');
+          if (confirm('Are you sure you want to cancel this booking?')) {
+            cancelBooking(index);
+          }
+        });
+      }
+
+      // Cancel booking
+      function cancelBooking(index) {
+        let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+        bookings.splice(index, 1); // Remove the booking at the given index
+        localStorage.setItem('bookings', JSON.stringify(bookings));
+        displayBookings(bookings); // Refresh the UI
+        alert('Booking canceled successfully.');
+      }
+
+      // Display recent services
+      function displayRecentServices(services) {
+        $('#recent-services').html(
+          services.map(service => `
+            <div class="service-card">
+              <img src="${service.image}" alt="${service.name}" class="service-image" />
+              <h3>${service.name}</h3>
+              <p>Category: ${service.category}</p>
+              <p>Price: PKR ${service.price}</p>
+              <p>Rating: ${service.rating} <i class="fas fa-star"></i></p>
+              <p>Availability: ${service.availability}</p>
+              <p>City: ${числservice.city}</p>
+              <a href="booking.html?service=${service.id}" class="search-btn">Book Now</a>
+            </div>
+          `).join('')
+        );
+      }
+    });
+  </script>
+</body>
+</html>

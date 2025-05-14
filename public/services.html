@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Services - Home Service Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+  
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav-container">
+      <div class="logo">Home Service Hub</div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="services.html" class="active">Services</a>
+        <a href="booking.html">Booking</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="auth.html?mode=login" class="auth-btn login-btn" onclick="window.location.href=this.href; return false;">Login</a>
+        <a href="auth.html?mode=signup" class="auth-btn signup-btn" onclick="window.location.href=this.href; return false;">Sign Up</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Services Section -->
+  <section class="services" id="services">
+    <div class="section-title">
+      <h2>Find Services</h2>
+      <p>Explore our range of home services</p>
+    </div>
+    <!-- Slider with Images -->
+    <div class="swiper-container service-slider">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="plumbering.jpg" alt="Plumbing Service" />
+        </div>
+        <div class="swiper-slide">
+          <img src="electrician1.jpg" alt="Electrical Service" />
+        </div>
+        <div class="swiper-slide">
+          <img src="painting1.jpg" alt="Painting Service" />
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+    <div class="search-bar">
+      <form class="search-form">
+        <input type="text" class="search-input" placeholder="Search services">
+        <select class="location-select">
+          <option>Select City</option>
+          <option>Lahore</option>
+          <option>Islamabad</option>
+          <option>Karachi</option>
+          <option>Rawalpindi</option>
+        </select>
+        <button class="search-btn" type="submit">Search</button>
+      </form>
+      <div class="filters">
+        <select id="price-filter">
+          <option value="">Sort by Price</option>
+          <option value="low">Low to High</option>
+          <option value="high">High to Low</option>
+        </select>
+        <select id="rating-filter">
+          <option value="">Sort by Rating</option>
+          <option value="high">High to Low</option>
+          <option value="low">Low to High</option>
+        </select>
+      </div>
+    </div>
+    <div class="services-grid" id="service-results">
+      <!-- Six service cards will be loaded here -->
+    </div>
+    <!-- Google Maps Section -->
+    <div class="map-container">
+      <h2>Our Service Locations</h2>
+      <div id="map"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-section">
+        <h3>Home Service Hub</h3>
+        <p>Your trusted partner for home maintenance solutions across Pakistan</p>
+      </div>
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p>Phone: 0315-0141643</p>
+        <p>Email: zahidaslam051@gmail.com</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2023 HomeServiceHub. All rights reserved</p>
+    </div>
+  </footer>
+<!-- ============= WITHOUT GOOGLEMAP API USE MAPBOX =========
+<script>
+    // Initialize Swiper Slider
+    const swiper = new Swiper('.service-slider', {
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      autoplay: {
+        delay: 3000,
+      },
+    });
+
+    // Mapbox Initialization
+    $(document).ready(function() {
+      mapboxgl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN'; // Replace with your Mapbox access token
+      const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [69.3451, 30.3753], // Center on Pakistan [lng, lat]
+        zoom: 5
+      });
+
+      // Add markers for major cities
+      const cities = [
+        { name: 'Lahore', lng: 74.3436, lat: 31.5497 },
+        { name: 'Karachi', lng: 67.0011, lat: 24.8607 },
+        { name: 'Islamabad', lng: 73.0479, lat: 33.6844 }
+      ];
+
+      cities.forEach(city => {
+        new mapboxgl.Marker()
+          .setLngLat([city.lng, city.lat])
+          .setPopup(new mapboxgl.Popup().setHTML(`<h3>${city.name}</h3>`))
+          .addTo(map);
+      });
+
+      // Highlight active navigation link
+      $('.nav-links a').each(function() {
+        if (this.href === window.location.href) {
+          $(this).addClass('active');
+        }
+      });
+
+      // Load services from JSON
+      $.ajax({
+        url: 'data/services.json',
+        method: 'GET',
+        success: function(services) {
+          displayServices(services);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.error('Error loading services:', textStatus, errorThrown);
+          const fallbackServices = [
+            {
+              id: 1,
+              name: "Leak Repair",
+              category: "Plumbing",
+              price: 5000,
+              rating: 4.5,
+              availability: "24/7",
+              city: "Lahore",
+              image: "https://images.unsplash.com/photo-1581578735769-4c7439142495"
+            },
+            {
+              id: 2,
+              name: "Wiring Installation",
+              category: "Electrical",
+              price: 7000,
+              rating: 4.8,
+              availability: "9 AM - 5 PM",
+              city: "Karachi",
+              image: "https://images.unsplash.com/photo-1578574579388-47d803e3b343"
+            },
+            {
+              id: 3,
+              name: "Interior Painting",
+              category: "Painting",
+              price: 10000,
+              rating: 4.2,
+              availability: "Weekends",
+              city: "Islamabad",
+              image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
+            },
+            {
+              id: 4,
+              name: "Carpenter",
+              category: "Carpentry",
+              price: 6000,
+              rating: 4.7,
+              availability: "10 AM - 6 PM",
+              city: "Lahore",
+              image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688"
+            },
+            {
+              id: 5,
+              name: "Engineer",
+              category: "Engineering",
+              price: 8000,
+              rating: 4.9,
+              availability: "By Appointment",
+              city: "Karachi",
+              image: "https://images.unsplash.com/photo-1503387762-5927c2ebaeea"
+            },
+            {
+              id: 6,
+              name: "Huvor",
+              category: "Special Services",
+              price: 9000,
+              rating: 4.6,
+              availability: "24/7",
+              city: "Islamabad",
+              image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d"
+            },
+            {
+              id: 7,
+              name: "Plasterer",
+              category: "Masonry",
+              price: 5500,
+              rating: 4.4,
+              availability: "9 AM - 5 PM",
+              city: "Rawalpindi",
+              image: "https://images.unsplash.com/photo-1581093450021-1a663a8a6d7b"
+            },
+            {
+              id: 8,
+              name: "Cleaner",
+              category: "Cleaning Services",
+              price: 4000,
+              rating: 4.3,
+              availability: "Weekends",
+              city: "Lahore",
+              image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
+            }
+          ];
+          displayServices(fallbackServices);
+        }
+      });
+
+      // Display services function
+      function displayServices(services) {
+        $('#service-results').html(
+          services.map(service => `
+            <div class="service-card">
+              <img src="${service.image}" alt="${service.name}" class="service-image" />
+              <h3>${service.name}</h3>
+              <p>Category: ${service.category}</p>
+              <p>Price: PKR ${service.price}</p>
+              <p>Rating: ${service.rating} <i class="fas fa-star"></i></p>
+              <p>Availability: ${service.availability}</p>
+              <p>City: ${service.city}</p>
+              <a href="booking.html?service=${service.id}" class="search-btn">Book Now</a>
+            </div>
+          `).join('')
+        );
+      }
+
+      // Search form submission
+      $('.search-form').on('submit', function(e) {
+        e.preventDefault();
+        const query = $('.search-input').val().toLowerCase();
+        const city = $('.location-select').val();
+        $.ajax({
+          url: 'data/services.json',
+          method: 'GET',
+          success: function(services) {
+            let filtered = services;
+            if (query) {
+              filtered = filtered.filter(s => 
+                s.name.toLowerCase().includes(query) || 
+                s.category.toLowerCase().includes(query)
+              );
+            }
+            if (city !== 'Select City') {
+              filtered = filtered.filter(s => s.city === city);
+            }
+            displayServices(filtered);
+          },
+          error: function() {
+            displayServices(fallbackServices);
+          }
+        });
+      });
+
+      // Price filter
+      $('#price-filter').on('change', function() {
+        const value = $(this).val();
+        $.ajax({
+          url: 'data/services.json',
+          method: 'GET',
+          success: function(services) {
+            if (value === 'low') {
+              services.sort((a, b) => a.price - b.price);
+            } else if (value === 'high') {
+              services.sort((a, b) => b.price - a.price);
+            }
+            displayServices(services);
+          },
+          error: function() {
+            displayServices(fallbackServices);
+          }
+        });
+      });
+
+      // Rating filter
+      $('#rating-filter').on('change', function() {
+        const value = $(this).val();
+        $.ajax({
+          url: 'data/services.json',
+          method: 'GET',
+          success: function(services) {
+            if (value === 'high') {
+              services.sort((a, b) => b.rating - a.rating);
+            } else if (value === 'low') {
+              services.sort((a, b) => a.rating - b.rating);
+            }
+            displayServices(services);
+          },
+          error: function() {
+            displayServices(fallbackServices);
+          }
+        });
+      });
+    });
+</script> -->
+  <!-- ===========WITH GOOGLE MAP API============ -->
+  <script>
+    // Initialize Swiper Slider
+    const swiper = new Swiper('.service-slider', {
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      autoplay: {
+        delay: 3000,
+      },
+    });
+
+    // Google Maps Initialization
+    function initMap() {
+      const pakistan = { lat: 30.3753, lng: 69.3451 }; // Center on Pakistan
+      const map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 5,
+        center: pakistan
+      });
+      const cities = [
+        { name: 'Lahore', lat: 31.5497, lng: 74.3436 },
+        { name: 'Karachi', lat: 24.8607, lng: 67.0011 },
+        { name: 'Islamabad', lat: 33.6844, lng: 73.0479 }
+      ];
+      cities.forEach(city => {
+        new google.maps.Marker({
+          position: { lat: city.lat, lng: city.lng },
+          map: map,
+          title: city.name
+        });
+      });
+    }
+
+    $(document).ready(function() {
+      // Highlight active navigation link
+      $('.nav-links a').each(function() {
+        if (this.href === window.location.href) {
+          $(this).addClass('active');
+        }
+      });
+
+      // Load services from JSON
+      $.ajax({
+        url: 'data/services.json',
+        method: 'GET',
+        success: function(services) {
+          displayServices(services);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.error('Error loading services:', textStatus, errorThrown);
+          // Fallback: Display all eight hardcoded services
+          const fallbackServices = [
+            {
+              id: 1,
+              name: "Leak Repair",
+              category: "Plumbing",
+              price: 5000,
+              rating: 4.5,
+              availability: "24/7",
+              city: "Lahore",
+              image: "repair.jpg"
+            },
+            {
+              id: 2,
+              name: "Wiring Installation",
+              category: "Electrical",
+              price: 7000,
+              rating: 4.8,
+              availability: "9 AM - 5 PM",
+              city: "Karachi",
+              image: "wiring.jpg"
+            },
+            {
+              id: 3,
+              name: "Interior Painting",
+              category: "Painting",
+              price: 10000,
+              rating: 4.2,
+              availability: "Weekends",
+              city: "Islamabad",
+              image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
+            },
+            {
+              id: 4,
+              name: "Carpenter",
+              category: "Carpentry",
+              price: 6000,
+              rating: 4.7,
+              availability: "10 AM - 6 PM",
+              city: "Lahore",
+              image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688"
+            },
+            {
+              id: 5,
+              name: "Engineer",
+              category: "Engineering",
+              price: 8000,
+              rating: 4.9,
+              availability: "By Appointment",
+              city: "Karachi",
+              image: "engineer1.jpg"
+            },
+            {
+              id: 6,
+              name: "Huvor",
+              category: "Special Services",
+              price: 9000,
+              rating: 4.6,
+              availability: "24/7",
+              city: "Islamabad",
+              image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d"
+            },
+            {
+              id: 7,
+              name: "Plasterer",
+              category: "Masonry",
+              price: 5500,
+              rating: 4.4,
+              availability: "9 AM - 5 PM",
+              city: "Rawalpindi",
+              image: "pluster.jpg"
+            },
+            {
+              id: 8,
+              name: "Cleaner",
+              category: "Cleaning Services",
+              price: 4000,
+              rating: 4.3,
+              availability: "Weekends",
+              city: "Lahore",
+              image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
+            }
+          ];
+          displayServices(fallbackServices);
+        }
+      });
+
+      // Display services function
+      function displayServices(services) {
+        $('#service-results').html(
+          services.map(service => `
+            <div class="service-card">
+              <img src="${service.image}" alt="${service.name}" class="service-image" />
+              <h3>${service.name}</h3>
+              <p>Category: ${service.category}</p>
+              <p>Price: PKR ${service.price}</p>
+              <p>Rating: ${service.rating} <i class="fas fa-star"></i></p>
+              <p>Availability: ${service.availability}</p>
+              <p>City: ${service.city}</p>
+              <a href="booking.html?service=${service.id}" class="search-btn">Book Now</a>
+            </div>
+          `).join('')
+        );
+      }
+
+      // Search form submission
+      $('.search-form').on('submit', function(e) {
+        e.preventDefault();
+        const query = $('.search-input').val().toLowerCase();
+        const city = $('.location-select').val();
+        $.ajax({
+          url: 'data/services.json',
+          method: 'GET',
+          success: function(services) {
+            let filtered = services;
+            if (query) {
+              filtered = filtered.filter(s => 
+                s.name.toLowerCase().includes(query) || 
+                s.category.toLowerCase().includes(query)
+              );
+            }
+            if (city !== 'Select City') {
+              filtered = filtered.filter(s => s.city === city);
+            }
+            displayServices(filtered);
+          },
+          error: function() {
+            displayServices(fallbackServices); // Use fallback if search fails
+          }
+        });
+      });
+
+      // Price filter
+      $('#price-filter').on('change', function() {
+        const value = $(this).val();
+        $.ajax({
+          url: 'data/services.json',
+          method: 'GET',
+          success: function(services) {
+            if (value === 'low') {
+              services.sort((a, b) => a.price - b.price);
+            } else if (value === 'high') {
+              services.sort((a, b) => b.price - a.price);
+            }
+            displayServices(services);
+          },
+          error: function() {
+            displayServices(fallbackServices); // Use fallback if filter fails
+          }
+        });
+      });
+
+      // Rating filter
+      $('#rating-filter').on('change', function() {
+        const value = $(this).val();
+        $.ajax({
+          url: 'data/services.json',
+          method: 'GET',
+          success: function(services) {
+            if (value === 'high') {
+              services.sort((a, b) => b.rating - a.rating);
+            } else if (value === 'low') {
+              services.sort((a, b) => a.rating - b.rating);
+            }
+            displayServices(services);
+          },
+          error: function() {
+            displayServices(fallbackServices); // Use fallback if filter fails
+          }
+        });
+      });
+    });
+</script>
+ 
+</body>
+</html>
